@@ -1,0 +1,48 @@
+{%extends "layout.html"%}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión</title>
+    <style>
+        /* Asegura espacio entre los elementos del formulario */
+        .form-group {
+            margin-bottom: 15px; /* Ajusta el espacio entre campos */
+        }
+    </style>
+    <!-- Incluye el CSS de Bootstrap si aún no lo has hecho -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    {% block content %}
+    <!-- Left Image -->
+    <section class="left-image">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/left-image.jpg') }}" alt="">
+          </div>
+          <div class="col-md-6">
+            <div class="right-content">
+              <h1>Iniciar sesión</h1>
+              <form id="contact" action="contact" method="post">
+                <div class="form-group">
+                  <input name="user" type="text" class="form-control" id="user" placeholder="Usuario" required="">
+                </div>
+                <div class="form-group">
+                  <input name="pass" type="password" class="form-control" id="pass" placeholder="Contraseña" required="">
+                </div>
+                <div class="form-group">
+                  <button type="submit" id="form-submit" class="button">Ingresar</button>
+                </div>
+              </form>           
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endblock %}
+</body>
+</html>

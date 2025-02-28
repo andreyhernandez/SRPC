@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- Contact Form -->
+<section class="contact-form">
+  <div class="container-fluid">
+      <div class="row">      
+        <h1>Consulta tu información</h1>
+      </div>
+    <div class="row">
+        <form id="contact" action="/get_data" method="post">
+          <div class="row">
+            <div class="col-md-12">
+              <fieldset>
+                <input name="document" type="text" class="form-control" id="document" placeholder="Documento" required="">
+              </fieldset>
+            </div>
+            <div class="col-md-12">
+              <fieldset>
+                <button type="submit" id="form-submit" class="button">Consultar</button>
+              </fieldset>
+            </div>
+          </div>
+        </form>      
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table" id="result-table" style="display: none;">
+            <thead>
+              <tr>
+                <th>Cédula</th>
+                <th>Nombre</th>
+                <th>Monto</th>
+                <th>Tipo (Diario/Semanal/Mensual)</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Cuotas</th>
+                <th>(Total a Pagar)</th>
+                <th>Estado (Activo/Pagado)</th>
+              </tr>
+            </thead>
+            <tbody id="result-body">
+              <!-- Los resultados se insertarán aquí -->
+            </tbody>
+          </table>
+        </div>
+        <p id="no-results" style="display: none;">No se encontraron resultados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.getElementById('contact').addEventListener('submit', function(event) {
+  event.preventDefault();
+  var documentValue = document.getElementById('document').value;
+  console.log('Document value:', documentValue); // Debug log
+  fetch('/get_data', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'document=' + documentValue
+  })
+  .then(response => {
+    //console.log('Response object:', response); // Print the response object
+    console.log('Response status:', response.status); // Debug log
+    return response.json();
+  })
+  .then(data => {
+    console.log('Data received:', data); // Debug log
+    var resultTable = document.getElementById('result-table');
+    var resultBody = document.getElementById('result-body');
+    var noResults = document.getElementById('no-results');
+    resultBody.innerHTML = '';
+    if (data.length > 0) {
+      data.forEach(row => {
+        console.log('Processing row:', row); // Debug log
+        var tr = document.createElement('tr');
+        tr.innerHTML = `<td>${row.Cedula}</td><td>${row.Nombre}</td><td>${row.Monto}</td><td>${row['Tipo (Diario/Semanal/Mensual)']}</td><td>${row['Fecha Inicio']}</td><td>${row['Fecha Fin']}</td><td>${row['Cuotas'] || 'N/A'}</td><td>${row['(Total a Pagar)']}</td><td>${row['Estado (Activo/Pagado)']}</td>`;
+        resultBody.appendChild(tr);
+      });
+      resultTable.style.display = 'table';
+      noResults.style.display = 'none';
+    } else {
+      resultTable.style.display = 'none';
+      noResults.style.display = 'block';
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    var resultTable = document.getElementById('result-table');
+    var noResults = document.getElementById('no-results');
+    resultTable.style.display = 'none';
+    noResults.style.display = 'block';
+    noResults.textContent = 'Error al obtener los datos. Por favor, inténtelo de nuevo.';
+  });
+});
+</script>
+{% endblock %}

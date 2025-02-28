@@ -1,0 +1,53 @@
+{%extends "layout.html"%}
+{% block content%}
+
+<!-- Banner -->
+<section class="main-banner">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="banner-content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="banner-caption">
+                <h4>¡Bienvenido!</h4>
+                <p>
+                <p>Sabias que en <strong>Soluciones Rapidas Pecado Capital</strong> te brindamos una solución rápida y efectiva para que puedas realizar lo que tanto te gusta
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <a href="{{url_for('contact')}}">
+        <div class="service-item fivth-item">
+          <div class="icon"></div>
+          <h4>Actualización</h4>
+          <p>Actualiza la información de los clientes cuando lo desees  .</p>
+        </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="{{url_for('contact')}}">
+        <div class="service-item sixth-item">
+          <div class="icon"></div>
+            <h4>Consultas</h4>
+            <p>Consulta aquí el estado de tu cuenta y cómo vas con nosotros.</p>
+          </div>
+      </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

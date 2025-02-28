@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+    <title>SRPC</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static', filename = 'bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{url_for('static', filename = 'images/icon_03.png')}}">
+    <!--
+Ramayana CSS Template
+https://templatemo.com/tm-529-ramayana
+-->
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/fontawesome.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/templatemo-style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/owl.css')}}">
+
+</head>
+
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar" style="width: 250px; position: fixed; height: 100vh; left: 0;"> <!-- Mover la barra lateral al lado izquierdo -->
+
+            <div class="inner" style="width: 250px;">
+
+                <!-- Menu -->
+                <nav id="menu">
+                    <ul>
+                        <li><a href="{{url_for('index')}}">Inicio</a></li>
+                        <li><a href="{{url_for('survey')}}">Estado de cuenta</a></li>
+                        <li><a href="{{url_for('contact')}}">Actualización</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+
+        <!-- Main -->
+        <div id="main" class="main-content" style="margin-left: 250px;"> <!-- Ajustar el margen izquierdo del área principal -->
+            <div class="inner">
+
+                <!-- Header -->
+                <header id="header">
+                    <div class="logo">
+                        <a href="#">Soluciones Rapidas pecado capital</a>
+                    </div>
+                </header>
+
+                {% block content %}
+                {% endblock %}
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{url_for('static', filename = 'jquery/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <script src="{{url_for('static', filename = 'js/browser.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/breakpoints.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/transition.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/owl-carousel.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/custom.js')}}"></script>
+</body>
+
+</html>
