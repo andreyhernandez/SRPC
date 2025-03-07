@@ -55,7 +55,8 @@ def contact():
 def get_data():
     document = request.form['document']
     #print(f'Received document: {document}')  # Debug log
-    sheet = client.open('Gestión de Préstamos').worksheet('Préstamos')
+    
+    sheet = client.open('Gestión de Préstamos').worksheet(document)
     records = sheet.get_all_records()
     #print(f'All records: {records}')  # Debug log
     
