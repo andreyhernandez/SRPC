@@ -2,6 +2,8 @@ from flask import Flask, render_template, url_for, request, jsonify
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+import os
+import json
 import numpy as np
 import pandas as pd
 import mysql.connector
@@ -11,18 +13,21 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.express as px
 
-mydb= mysql.connector.connect(host="localhost",user="root",passwd="Admin", database="sfpc",port="3306")
-cursor= mydb.cursor()   
+google_creds_json = os.getenv("GOOGLE_CREDENTIALS")
 
-df = px.data.tips()
-days = df.day.unique()
+if google_creds_json:
+    creds_dict = json.loads(google_creds_json)  # Convertir el string JSON en diccionario
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, [
+        "https://spreadsheets.google.com/feeds",
+        "https://www.googleapis.com/auth/drive"
+    ])
+    client = gspread.authorize(creds)
+else:
+    raise ValueError("No se encontraron las credenciales de Google Sheets en las variables de entorno")
+
 
 app = Flask(__name__)
 
-# Configurar las credenciales de Google Sheets API
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-client = gspread.authorize(creds)
 
 @app.route('/')
 def index():
