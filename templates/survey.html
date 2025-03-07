@@ -9,20 +9,20 @@
         <h1>Consulta tu información</h1>
       </div>
     <div class="row">
-        <form id="contact" action="/get_data" method="post">
-          <div class="row">
-            <div class="col-md-12">
-              <fieldset>
-                <input name="document" type="text" class="form-control" id="document" placeholder="Documento" required="">
-              </fieldset>
+          <form id="contact" action="/get_data" method="post">
+            <div class="row">
+              <div class="col-md-12">
+                <fieldset>
+                  <input name="document" type="text" class="form-control" id="document" placeholder="Documento" required="">
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="button">Consultar</button>
+                </fieldset>
+              </div>
             </div>
-            <div class="col-md-12">
-              <fieldset>
-                <button type="submit" id="form-submit" class="button">Consultar</button>
-              </fieldset>
-            </div>
-          </div>
-        </form>      
+          </form>      
     </div>
     <div class="row">
       <div class="col-md-12">
@@ -33,12 +33,12 @@
                 <th>Cédula</th>
                 <th>Nombre</th>
                 <th>Monto</th>
-                <th>Tipo (Diario/Semanal/Mensual)</th>
+                <th>Tipo</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
                 <th>Cuotas</th>
-                <th>(Total a Pagar)</th>
-                <th>Estado (Activo/Pagado)</th>
+                <th>Total a Pagar</th>
+                <th>Estado</th>
               </tr>
             </thead>
             <tbody id="result-body">
@@ -49,9 +49,16 @@
         <p id="no-results" style="display: none;">No se encontraron resultados.</p>
       </div>
     </div>
+    <div class="row" id="pdf-button-row" style="display: none;">
+      <div class="col-md-12">
+        <button id="generate-pdf" class="button">Generar PDF</button>
+      </div>
+    </div>
   </div>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 <script>
 document.getElementById('contact').addEventListener('submit', function(event) {
   event.preventDefault();
@@ -74,29 +81,60 @@ document.getElementById('contact').addEventListener('submit', function(event) {
     var resultTable = document.getElementById('result-table');
     var resultBody = document.getElementById('result-body');
     var noResults = document.getElementById('no-results');
+    var pdfButtonRow = document.getElementById('pdf-button-row');
     resultBody.innerHTML = '';
     if (data.length > 0) {
       data.forEach(row => {
         console.log('Processing row:', row); // Debug log
         var tr = document.createElement('tr');
-        tr.innerHTML = `<td>${row.Cedula}</td><td>${row.Nombre}</td><td>${row.Monto}</td><td>${row['Tipo (Diario/Semanal/Mensual)']}</td><td>${row['Fecha Inicio']}</td><td>${row['Fecha Fin']}</td><td>${row['Cuotas'] || 'N/A'}</td><td>${row['(Total a Pagar)']}</td><td>${row['Estado (Activo/Pagado)']}</td>`;
+        tr.innerHTML = `<td>${row.Cedula}</td><td>${row.Nombre}</td><td>${row.Monto}</td><td>${row['Tipo']}</td><td>${row['Fecha Inicio']}</td><td>${row['Fecha Fin']}</td><td>${row['Cuotas'] || 'N/A'}</td><td>${row['Total a Pagar']}</td><td class="${row['Estado'] === 'Activo' ? 'estado-activo' : 'estado-pagado'}">${row['Estado']}</td>`;
         resultBody.appendChild(tr);
       });
       resultTable.style.display = 'table';
       noResults.style.display = 'none';
+      pdfButtonRow.style.display = 'block';
     } else {
       resultTable.style.display = 'none';
       noResults.style.display = 'block';
+      pdfButtonRow.style.display = 'none';
     }
   })
   .catch(error => {
     console.error('Error:', error);
     var resultTable = document.getElementById('result-table');
     var noResults = document.getElementById('no-results');
+    var pdfButtonRow = document.getElementById('pdf-button-row');
     resultTable.style.display = 'none';
     noResults.style.display = 'block';
     noResults.textContent = 'Error al obtener los datos. Por favor, inténtelo de nuevo.';
+    pdfButtonRow.style.display = 'none';
   });
 });
+
+document.getElementById('generate-pdf').addEventListener('click', function() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const resultTable = document.getElementById('result-table');
+  if (resultTable.style.display === 'none') {
+    alert('No hay datos para generar el PDF.');
+    return;
+  }
+  const firstRowName = document.querySelector('#result-body tr td:nth-child(2)').textContent;
+  const fileName = `extracto_${firstRowName}.pdf`;
+  doc.autoTable({ html: '#result-table' });
+  doc.save(fileName);
+});
 </script>
+
+<style>
+  .estado-activo {
+    background-color: green;
+    color: white;
+  }
+  .estado-pagado {
+    background-color: red;
+    color: white;
+  }
+</style>
+
 {% endblock %}
