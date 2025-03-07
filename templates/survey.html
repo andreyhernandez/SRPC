@@ -4,30 +4,28 @@
 
 <!-- Contact Form -->
 <section class="contact-form">
-  <div class="container-fluid">
-      <div class="row">      
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
         <h1>Consulta tu información</h1>
       </div>
+    </div>
     <div class="row">
-          <form id="contact" action="/get_data" method="post">
-            <div class="row">
-              <div class="col-md-12">
-                <fieldset>
-                  <input name="document" type="text" class="form-control" id="document" placeholder="Documento" required="">
-                </fieldset>
-              </div>
-              <div class="col-md-12">
-                <fieldset>
-                  <button type="submit" id="form-submit" class="button">Consultar</button>
-                </fieldset>
-              </div>
-            </div>
-          </form>      
+      <div class="col-md-6">
+        <form id="contact" action="/get_data" method="post">
+          <div class="form-group">
+            <input name="document" type="text" class="form-control" id="document" placeholder="Documento" required="">
+          </div>
+          <div class="form-group">
+            <button type="submit" id="form-submit" class="btn btn-primary">Consultar</button>
+          </div>
+        </form>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive">
-          <table class="table" id="result-table" style="display: none;">
+          <table class="table" id="result-table">
             <thead>
               <tr>
                 <th>Cédula</th>
@@ -42,16 +40,26 @@
               </tr>
             </thead>
             <tbody id="result-body">
-              <!-- Los resultados se insertarán aquí -->
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
             </tbody>
           </table>
         </div>
         <p id="no-results" style="display: none;">No se encontraron resultados.</p>
       </div>
     </div>
-    <div class="row" id="pdf-button-row" style="display: none;">
+    <div class="row" id="pdf-button-row" style="display: none; margin-top: 20px;">
       <div class="col-md-12">
-        <button id="generate-pdf" class="button">Generar PDF</button>
+        <button id="generate-pdf" class="btn btn-secondary">Generar PDF</button>
       </div>
     </div>
   </div>
@@ -94,7 +102,7 @@ document.getElementById('contact').addEventListener('submit', function(event) {
       noResults.style.display = 'none';
       pdfButtonRow.style.display = 'block';
     } else {
-      resultTable.style.display = 'none';
+      resultTable.style.display = 'table';
       noResults.style.display = 'block';
       pdfButtonRow.style.display = 'none';
     }
@@ -104,7 +112,7 @@ document.getElementById('contact').addEventListener('submit', function(event) {
     var resultTable = document.getElementById('result-table');
     var noResults = document.getElementById('no-results');
     var pdfButtonRow = document.getElementById('pdf-button-row');
-    resultTable.style.display = 'none';
+    resultTable.style.display = 'table';
     noResults.style.display = 'block';
     noResults.textContent = 'Error al obtener los datos. Por favor, inténtelo de nuevo.';
     pdfButtonRow.style.display = 'none';
@@ -134,6 +142,26 @@ document.getElementById('generate-pdf').addEventListener('click', function() {
   .estado-pagado {
     background-color: red;
     color: white;
+  }
+  @media (max-width: 768px) {
+    .contact-form .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .contact-form .row {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .contact-form form {
+      width: 100%;
+      max-width: 400px;
+    }
+    .contact-form .table-responsive {
+      width: 100%;
+      max-width: 400px;
+    }
   }
 </style>
 
