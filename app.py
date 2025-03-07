@@ -4,14 +4,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 import os
 import json
-import numpy as np
-import pandas as pd
-import mysql.connector
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
-from dash.dependencies import Input, Output
-import plotly.express as px
 
 google_creds_json = os.getenv("GOOGLE_CREDENTIALS")
 
