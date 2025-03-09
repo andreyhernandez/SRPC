@@ -31,7 +31,7 @@ def survey():
         document = request.form['document']
         sheet = client.open('nombre_de_tu_hoja').sheet1
         records = sheet.get_all_records()
-        result = [record for record in records if record['Cedula'] == document]
+        result = [record for record in records if record['ID'] == document]
         return render_template('survey.html', result=result)
     return render_template('survey.html', result=None)
 
@@ -64,7 +64,7 @@ def get_data():
         print(f'Invalid document ID: {document}')  # Debug log
         return jsonify([])
 
-    result = [record for record in records if int(record['Cedula']) == document]
+    result = [record for record in records if int(record['ID']) == document]
     #print(f'Response data: {result}')  # Debug log
     return jsonify(result)
 
