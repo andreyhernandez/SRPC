@@ -11,10 +11,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <form id="contact" action="/get_data" method="post">
           <div class="form-group">
-            <input name="document" type="text" class="form-control" id="document" placeholder="Documento" required="">
+            <input name="document" type="text" class="form-control" id="document" placeholder="Ingresa tu ID de prestamo" required="">
           </div>
           <div class="form-group">
             <button type="submit" id="form-submit" class="btn btn-primary">Consultar</button>
@@ -28,15 +28,17 @@
           <table class="table" id="result-table">
             <thead>
               <tr>
-                <th>Cédula</th>
-                <th>Nombre</th>
-                <th>Monto</th>
-                <th>Tipo</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
-                <th>Cuotas</th>
-                <th>Total a Pagar</th>
-                <th>Estado</th>
+                <th>ID</th>
+                <th>Nombre </th>
+                <th>Días de Pago</th>
+                <th>Valor Pago</th>
+                <th>Cuota</th>
+                <th>Cuotas Debe</th>
+                <th>Saldos en Mora</th>
+                <th>Anotaciones</th>
+                <th>Fecha de Pago</th>
+                <th>Pago</th>
+                <th>Valor de la Cuota</th>
               </tr>
             </thead>
             <tbody id="result-body">
@@ -95,7 +97,7 @@ document.getElementById('contact').addEventListener('submit', function(event) {
       data.forEach(row => {
         console.log('Processing row:', row); // Debug log
         var tr = document.createElement('tr');
-        tr.innerHTML = `<td>${row.Cedula}</td><td>${row.Nombre}</td><td>${row.Monto}</td><td>${row['Tipo']}</td><td>${row['Fecha Inicio']}</td><td>${row['Fecha Fin']}</td><td>${row['Cuotas'] || 'N/A'}</td><td>${row['Total a Pagar']}</td><td class="${row['Estado'] === 'Activo' ? 'estado-activo' : 'estado-pagado'}">${row['Estado']}</td>`;
+        tr.innerHTML = `<td>${row.ID}</td><td>${row.NOMBRE}</td><td>${row['DIAS DE PAGO']}</td><td>${row['VALOR PAGO']}</td><td>${row['CUOTA']}</td><td>${row['CUOTAS DEBE'] || 'N/A'}</td><td>${row['SALDOS EN MORA']}</td><td>${row['ANOTACIONES']}</td><td>${row['FECHA DE PAGO']}</td><td class="${row['PAGO'] === 'PAGO' ? 'estado-activo' : 'estado-pagado'}">${row['PAGO']}</td><td>${row['VALOR DE LA CUOTA']}</td>`;
         resultBody.appendChild(tr);
       });
       resultTable.style.display = 'table';
