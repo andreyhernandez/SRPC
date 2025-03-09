@@ -31,25 +31,8 @@ https://templatemo.com/tm-529-ramayana
     <!-- Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <div id="sidebar" style="width: 250px; position: fixed; height: 100vh; left: 0;"> <!-- Mover la barra lateral al lado izquierdo -->
-
-            <div class="inner" style="width: 250px;">
-
-                <!-- Menu -->
-                <nav id="menu">
-                    <ul>
-                        <li><a href="{{url_for('index')}}">Inicio</a></li>
-                        <li><a href="{{url_for('survey')}}">Estado de cuenta</a></li>
-                        <!--<li><a href="{{url_for('contact')}}">Actualización</a></li> -->
-                    </ul>
-                </nav>
-
-            </div>
-        </div>
-
         <!-- Main -->
-        <div id="main" class="main-content" style="margin-left: 250px;"> <!-- Ajustar el margen izquierdo del área principal -->
+        <div id="main">
             <div class="inner">
 
                 <!-- Header -->
@@ -59,8 +42,30 @@ https://templatemo.com/tm-529-ramayana
                     </div>
                 </header>
 
-                {% block content %}
+                {% block content%}
                 {% endblock %}
+
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+
+            <div class="inner">
+
+                
+
+                <!-- Menu -->
+                <nav id="menu">
+                    <ul>
+                        <li><a href="{{url_for('index')}}">Inicio</a></li>
+                        <li><a href="{{url_for('survey')}}">Estado de cuenta</a></li>
+                       
+                    </ul>
+                </nav>
+
+
+                
 
             </div>
         </div>
