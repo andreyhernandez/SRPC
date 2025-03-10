@@ -82,11 +82,16 @@ document.getElementById('contact').addEventListener('submit', function(event) {
     body: 'document=' + documentValue
   })
   .then(response => {
-    //console.log('Response object:', response); // Print the response object
+    if (!response.ok) {
+      throw new Error('Error el ID consultado no existe.');
+    }
     console.log('Response status:', response.status); // Debug log
     return response.json();
   })
   .then(data => {
+    if (data.error) {
+      throw new Error(data.error);
+    }
     console.log('Data received:', data); // Debug log
     var resultTable = document.getElementById('result-table');
     var resultBody = document.getElementById('result-body');
@@ -114,9 +119,9 @@ document.getElementById('contact').addEventListener('submit', function(event) {
     var resultTable = document.getElementById('result-table');
     var noResults = document.getElementById('no-results');
     var pdfButtonRow = document.getElementById('pdf-button-row');
-    resultTable.style.display = 'table';
+    resultTable.style.display = 'none';
     noResults.style.display = 'block';
-    noResults.textContent = 'Error al obtener los datos. Por favor, inténtelo de nuevo.';
+    noResults.textContent = error.message;
     pdfButtonRow.style.display = 'none';
   });
 });

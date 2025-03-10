@@ -47,17 +47,18 @@ def contact():
         # Procesar los datos del formulario según sea necesario
         return render_template('impact.html', user=user, contrasena=contrasena)
     return render_template('impact.html')
-
 @app.route('/get_data', methods=['POST'])
 def get_data():
     document = request.form['document']
     #print(f'Received document: {document}')  # Debug log
     
-    sheet = client.open('Gestión de Préstamos').worksheet(document)
-    records = sheet.get_all_records()
-    #print(f'All records: {records}')  # Debug log
+    try:
+        sheet = client.open('Gestión de Préstamos').worksheet(document)
+        records = sheet.get_all_records()
+    except Exception as e:
+        print(f'Error fetching records: {e}')  # Debug log
+        return jsonify({'error': 'El ID consultado no existe.'}), 500
     
-    # Convert document to integer for comparison
     try:
         document = int(document)
     except ValueError:
